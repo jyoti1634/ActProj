@@ -26,7 +26,7 @@ public class FinancialYear {
 
     @Column(name = "year_end", nullable = false)
     private Integer yearEnd;
-
+    // Opening balance field with precision and scale, defaulting to 0.00
     @Column(name = "opening_balance", precision = 12, scale = 2)
     private BigDecimal openingBalance = new BigDecimal("0.00");
 }

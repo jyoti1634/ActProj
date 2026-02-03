@@ -5,5 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, Integer> {
+    // Method to find accounts by user ID
     List<Account> findByUserId(Integer userId);
 }

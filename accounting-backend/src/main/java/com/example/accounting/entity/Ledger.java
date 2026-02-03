@@ -2,8 +2,9 @@ package com.example.accounting.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+// Hibernate import for automatic timestamping
 import org.hibernate.annotations.CreationTimestamp;
-
+// Java imports for data types
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -53,7 +54,8 @@ public class Ledger {
 
     @Column(name = "cheque_no", length = 50)
     private String chequeNo;
-
+    // Automatic timestamping of record creation
+    // creationtimestamp will auto-fill this field with the current timestamp when the record is created
     @CreationTimestamp
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;

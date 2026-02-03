@@ -24,6 +24,7 @@ public class Month {
     @Column(name = "month_name", length = 20, nullable = false)
     private String monthName;
 
+    // Opening balance field with precision and scale, defaulting to 0.00
     @Column(name = "opening_balance", precision = 12, scale = 2)
     private BigDecimal openingBalance = new BigDecimal("0.00");
 }

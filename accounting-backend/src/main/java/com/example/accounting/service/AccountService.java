@@ -1,0 +1,12 @@
+package com.example.accounting.service;
+
+import com.example.accounting.entity.Account;
+
+import java.util.List;
+import java.util.Optional;
+
+public interface AccountService {
+    Account createAccount(Account account);
+    Optional<Account> findById(Integer id);
+    List<Account> findByUserId(Integer userId);
+}

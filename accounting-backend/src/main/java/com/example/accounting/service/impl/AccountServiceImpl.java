@@ -1,0 +1,40 @@
+package com.example.accounting.service.impl;
+
+import com.example.accounting.entity.Account;
+import com.example.accounting.repository.AccountRepository;
+import com.example.accounting.service.AccountService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+@RequiredArgsConstructor
+@Transactional
+public class AccountServiceImpl implements AccountService {
+
+    private final AccountRepository accountRepository;
+    // Creates a new account after validating the input data 
+    @Override
+    public Account createAccount(Account account) {
+        // Minimal validation
+        if (account.getAccountName() == null || account.getAccountName().isBlank()) {
+            throw new IllegalArgumentException("Account name is required");
+        }
+        return accountRepository.save(account);
+    }
+    // Finds an account by its ID 
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Account> findById(Integer id) {
+        return accountRepository.findById(id);
+    }
+    // Finds all accounts associated with a specific user ID
+    @Override
+    @Transactional(readOnly = true)
+    public List<Account> findByUserId(Integer userId) {
+        return accountRepository.findByUserId(userId);
+    }
+}

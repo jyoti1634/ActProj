@@ -24,3 +24,5 @@ Thumbs.db
 
 # Lombok
 **/lombok.config
+
+application-local.properties
