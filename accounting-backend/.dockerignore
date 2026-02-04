@@ -1,0 +1,26 @@
+# Ignore build artifacts and local files
+target/
+*.log
+*.tmp
+*.bak
+*.swp
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.iml
+
+# Git
+.git
+
+# Maven / node
+.settings/
+node_modules/
+
+# Env files
+.env*
+
+# Other
+flyway/
