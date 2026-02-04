@@ -17,4 +17,5 @@ COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8080
 # Recommended: supply JVM options via env variable (e.g. -Xmx512m)
 ENV JAVA_OPTS="-Xms128m -Xmx512m"
-ENTRYPOINT ["sh","-c","exec java $JAVA_OPTS -jar /app/app.jar"]
+# Use the PORT provided by the platform at runtime (default 8080 if missing)
+ENTRYPOINT ["sh","-c","exec java $JAVA_OPTS -Dserver.port=${PORT:-8080} -jar /app/app.jar"]

@@ -53,3 +53,6 @@ flyway-*.zip
 
 accounting-backend/flyway/
 *.zip
+
+# Render env (do NOT commit secrets)
+render.env
