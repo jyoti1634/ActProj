@@ -9,11 +9,14 @@ target/
 pom.xml.tag
 pom.xml.releaseBackup
 pom.xml.versionsBackup
+.mvn/
+.mvn/wrapper/
 
-# Eclipse/IntelliJ
+# Eclipse/IntelliJ/VSCode
 .settings/
 .idea/
 *.iml
+.vscode/
 
 # Logs
 *.log
@@ -25,4 +28,24 @@ Thumbs.db
 # Lombok
 **/lombok.config
 
+# Application properties and env
 application-local.properties
+application.properties.local
+.env
+.env.*
+
+# Generated
+generated-sources/
+generated-test-sources/
+
+# Build artifacts
+build/
+out/
+
+# IDE run configs
+*.ipr
+*.iws
+
+
+accounting-backend/flyway/
+*.zip
