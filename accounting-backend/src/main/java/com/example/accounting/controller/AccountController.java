@@ -29,6 +29,8 @@ public class AccountController {
     private final AccountService accountService;
     // Service for user management
     private final UserService userService;
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(AccountController.class);
+
     // Endpoint for creating a new account (uses authenticated user)
     @PostMapping
     public ResponseEntity<?> create(@Valid @RequestBody AccountDto dto) {
@@ -37,13 +39,26 @@ public class AccountController {
             return ResponseEntity.status(401).build();
         }
         UserPrincipal principal = (UserPrincipal) auth.getPrincipal();
+        logger.debug("Account.create principalId={} dto={}", principal.getId(), dto);
+
         User user = userService.findById(principal.getId()).orElseThrow(() -> new IllegalArgumentException("User not found"));
-        // prevent duplicate account names for the same user
-        if (dto.getAccountName() != null && accountService.existsByUserIdAndAccountNameIgnoreCase(user.getId(), dto.getAccountName())) {
-            return ResponseEntity.status(409).body(java.util.Map.of("message", "Account with this name already exists"));
+
+        // Validate required fields explicitly to avoid DB constraint errors
+        if (dto.getAccountName() == null || dto.getAccountName().isBlank()) {
+            return ResponseEntity.badRequest().body(java.util.Map.of("message", "accountName is required"));
         }
-        Account account = AccountMapper.toEntity(dto);
-        account.setUser(user);
+
+        // prevent duplicate account names for the same user
+        // if (accountService.existsByUserIdAndAccountNameIgnoreCase(user.getId(), dto.getAccountName())) {
+        //     return ResponseEntity.status(409).body(java.util.Map.of("message", "Account with this name already exists"));
+        // }
+
+        // Build entity explicitly for creation (avoids mapper side-effects)
+        Account account = Account.builder()
+                .accountName(dto.getAccountName())
+                .user(user)
+                .build();
+
         Account saved = accountService.createAccount(account);
         return ResponseEntity.ok(AccountMapper.toDto(saved));
     }

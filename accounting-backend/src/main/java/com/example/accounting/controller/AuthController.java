@@ -1,6 +1,6 @@
 package com.example.accounting.controller;
 
-// 
+
 import com.example.accounting.dto.*;
 // imports user entity for authentication processes
 import com.example.accounting.entity.User;

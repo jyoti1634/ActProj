@@ -28,9 +28,13 @@ import java.util.Map;
 // Global exception handler for REST controllers
 @ControllerAdvice
 public class RestExceptionHandler extends org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler {
+
+    private static final org.slf4j.Logger logger = org.slf4j.LoggerFactory.getLogger(RestExceptionHandler.class);
+
     // Handles IllegalArgumentExceptions and returns a structured error response
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Object> handleBadRequest(IllegalArgumentException ex, WebRequest request) {
+        logger.warn("Bad request: {}", ex.getMessage());
         // builds a response body with error details
         Map<String, Object> body = new HashMap<>();
         // adds timestamp, status, error type, message, and request path to the response body
@@ -45,6 +49,7 @@ public class RestExceptionHandler extends org.springframework.web.servlet.mvc.me
 
     @ExceptionHandler(ResourceNotFoundException.class)
     public ResponseEntity<Object> handleNotFound(ResourceNotFoundException ex, WebRequest request) {
+        logger.warn("Not found: {}", ex.getMessage());
         Map<String, Object> body = new HashMap<>();
         body.put("timestamp", Instant.now().toString());
         body.put("status", HttpStatus.NOT_FOUND.value());
