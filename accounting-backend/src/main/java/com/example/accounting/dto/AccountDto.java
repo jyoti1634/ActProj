@@ -8,6 +8,7 @@ import lombok.Data;
 public class AccountDto {
     private Integer id;
 
+    @com.fasterxml.jackson.annotation.JsonProperty(access = com.fasterxml.jackson.annotation.JsonProperty.Access.READ_ONLY)
     private Integer userId; // optional - server will use authenticated user when creating
 
     @NotBlank

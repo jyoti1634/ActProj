@@ -12,4 +12,7 @@ public interface AccountService {
 
     // Check duplicate by user and account name (case-insensitive)
     boolean existsByUserIdAndAccountNameIgnoreCase(Integer userId, String accountName);
+
+    // Ownership-aware lookup
+    Optional<Account> findByIdAndUserId(Integer id, Integer userId);
 }

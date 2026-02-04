@@ -10,4 +10,7 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
 
     // Check for duplicate account name for a user (case-insensitive)
     boolean existsByUserIdAndAccountNameIgnoreCase(Integer userId, String accountName);
+
+    // Find account by id only if it belongs to the given user
+    java.util.Optional<Account> findByIdAndUserId(Integer id, Integer userId);
 }

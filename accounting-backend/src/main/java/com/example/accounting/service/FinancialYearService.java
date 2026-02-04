@@ -9,4 +9,8 @@ public interface FinancialYearService {
     FinancialYear createFinancialYear(FinancialYear year);
     Optional<FinancialYear> findById(Integer id);
     List<FinancialYear> findByAccountId(Integer accountId);
+
+    // Ownership-aware lookup methods
+    Optional<FinancialYear> findByIdAndAccountUserId(Integer id, Integer userId);
+    List<FinancialYear> findByAccountIdAndUserId(Integer accountId, Integer userId);
 }

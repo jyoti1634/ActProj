@@ -34,11 +34,25 @@ public class MonthServiceImpl implements MonthService {
     public Optional<Month> findById(Integer id) {
         return monthRepository.findById(id);
     }
+
+    // Ownership-aware lookup: month must belong to a year whose account belongs to the user
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Month> findByIdAndYearAccountUserId(Integer id, Integer userId) {
+        return monthRepository.findByIdAndYear_Account_User_Id(id, userId);
+    }
+
     // Finds all months associated with a specific financial year ID
     @Override
     @Transactional(readOnly = true)
     public List<Month> findByYearId(Integer yearId) {
         return monthRepository.findByYearId(yearId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Month> findByYearIdAndUserId(Integer yearId, Integer userId) {
+        return monthRepository.findByYearIdAndYear_Account_User_Id(yearId, userId);
     }
 
     // Update an existing Month (used to set opening balance etc.)

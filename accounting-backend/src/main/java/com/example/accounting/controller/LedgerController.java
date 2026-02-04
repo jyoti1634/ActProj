@@ -3,7 +3,9 @@ package com.example.accounting.controller;
 import com.example.accounting.dto.LedgerDto;
 import com.example.accounting.entity.Ledger;
 import com.example.accounting.entity.Month;
+import com.example.accounting.exception.ResourceNotFoundException;
 import com.example.accounting.mapper.LedgerMapper;
+import com.example.accounting.security.UserPrincipal;
 import com.example.accounting.service.LedgerService;
 import com.example.accounting.service.MonthService;
 import lombok.RequiredArgsConstructor;
@@ -11,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import jakarta.validation.Valid;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +30,12 @@ public class LedgerController {
     // Endpoint for creating a new ledger entry for a specific month
     @PostMapping
     public ResponseEntity<LedgerDto> create(@PathVariable Integer monthId, @Valid @RequestBody LedgerDto dto) {
-        Month month = monthService.findById(monthId).orElseThrow(() -> new IllegalArgumentException("Month not found"));
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !(auth.getPrincipal() instanceof UserPrincipal)) {
+            return ResponseEntity.status(401).build();
+        }
+        UserPrincipal principal = (UserPrincipal) auth.getPrincipal();
+        Month month = monthService.findByIdAndYearAccountUserId(monthId, principal.getId()).orElseThrow(() -> new ResourceNotFoundException("Month not found"));
         Ledger l = LedgerMapper.toEntity(dto);
         l.setMonth(month);
         Ledger saved = ledgerService.createEntry(l);
@@ -35,6 +44,12 @@ public class LedgerController {
     // Endpoint for listing ledger entries associated with a specific month
     @GetMapping
     public ResponseEntity<List<LedgerDto>> list(@PathVariable Integer monthId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !(auth.getPrincipal() instanceof UserPrincipal)) {
+            return ResponseEntity.status(401).build();
+        }
+        UserPrincipal principal = (UserPrincipal) auth.getPrincipal();
+        monthService.findByIdAndYearAccountUserId(monthId, principal.getId()).orElseThrow(() -> new ResourceNotFoundException("Month not found"));
         List<LedgerDto> dtos = ledgerService.findByMonthId(monthId).stream().map(LedgerMapper::toDto).collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
     }
@@ -42,6 +57,12 @@ public class LedgerController {
     // Endpoint for deleting a specific ledger entry within a month
     @DeleteMapping("/{entryId}")
     public ResponseEntity<Void> delete(@PathVariable Integer monthId, @PathVariable Integer entryId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !(auth.getPrincipal() instanceof UserPrincipal)) {
+            return ResponseEntity.status(401).build();
+        }
+        UserPrincipal principal = (UserPrincipal) auth.getPrincipal();
+        monthService.findByIdAndYearAccountUserId(monthId, principal.getId()).orElseThrow(() -> new ResourceNotFoundException("Month not found"));
         Ledger ledger = ledgerService.findById(entryId).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND, "Ledger entry not found"));
         if (ledger.getMonth() == null || !ledger.getMonth().getId().equals(monthId)) {
             throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST, "Ledger entry does not belong to specified month");

@@ -43,6 +43,13 @@ public class AccountServiceImpl implements AccountService {
     public Optional<Account> findById(Integer id) {
         return accountRepository.findById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Account> findByIdAndUserId(Integer id, Integer userId) {
+        return accountRepository.findByIdAndUserId(id, userId);
+    }
+
     // Finds all accounts associated with a specific user ID
     @Override
     @Transactional(readOnly = true)

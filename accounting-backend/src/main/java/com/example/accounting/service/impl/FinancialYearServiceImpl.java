@@ -51,10 +51,24 @@ public class FinancialYearServiceImpl implements FinancialYearService {
     public Optional<FinancialYear> findById(Integer id) {
         return financialYearRepository.findById(id);
     }
+
+    // Ownership-aware lookup
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<FinancialYear> findByIdAndAccountUserId(Integer id, Integer userId) {
+        return financialYearRepository.findByIdAndAccount_User_Id(id, userId);
+    }
+
     // Finds all financial years associated with a specific account ID
     @Override
     @Transactional(readOnly = true)
     public List<FinancialYear> findByAccountId(Integer accountId) {
         return financialYearRepository.findByAccountId(accountId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<FinancialYear> findByAccountIdAndUserId(Integer accountId, Integer userId) {
+        return financialYearRepository.findByAccountIdAndAccount_User_Id(accountId, userId);
     }
 }

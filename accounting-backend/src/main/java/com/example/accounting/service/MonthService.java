@@ -12,4 +12,8 @@ public interface MonthService {
     List<Month> findByYearId(Integer yearId);
     BigDecimal calculateClosingBalance(Integer monthId);
     Month updateMonth(Month month); // new
+
+    // Ownership-aware lookup methods
+    Optional<Month> findByIdAndYearAccountUserId(Integer id, Integer userId);
+    List<Month> findByYearIdAndUserId(Integer yearId, Integer userId);
 }
