@@ -8,8 +8,7 @@ import lombok.Data;
 public class AccountDto {
     private Integer id;
 
-    @NotNull
-    private Integer userId;
+    private Integer userId; // optional - server will use authenticated user when creating
 
     @NotBlank
     private String accountName;

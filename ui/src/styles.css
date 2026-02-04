@@ -1,0 +1,45 @@
+body { font-family: Inter, system-ui, Arial, sans-serif; margin: 0; padding: 0; }
+header { background:#0d6efd; color:white; padding: 12px 20px }
+.header-inner { display:flex; align-items:center; justify-content:space-between }
+.brand a { color: #fff; text-decoration:none; font-weight:700; font-size:18px; letter-spacing:0.3px }
+nav { display:flex; align-items:center; gap:12px }
+nav a { color:#fff; text-decoration:none; padding:6px 8px; border-radius:4px }
+nav a:hover { background: rgba(255,255,255,0.08) }
+nav .btn { padding:4px 8px }
+.header .user-greeting { color:#fff; font-weight:600 }
+
+/* tab navigation polish */
+.tabnav { display:flex; gap:8px; margin-bottom:16px }
+.tab { padding:8px 14px; border-radius:6px; cursor:pointer; border:1px solid #e6e6e6; background:#fff }
+.tab.active { background:#0d6efd; color:white; border:1px solid #0d6efd }
+.tab.disabled { opacity:0.5; cursor:default }
+.tab .small-muted { font-size:12px; color:#666; margin-left:12px }
+
+.container { padding: 20px }
+.tabnav { display:flex; gap:12px; margin-bottom:16px }
+.tab { padding:8px 12px; border:1px solid #ddd; border-radius:4px; cursor:pointer }
+.active { background:#0d6efd; color:white }
+.table { width:100%; border-collapse: collapse }
+.table th,.table td { border:1px solid #eee; padding:8px }
+
+/* Small UI polish */
+.card { background:#fff; padding:12px; border-radius:6px; box-shadow: 0 1px 4px rgba(16,24,40,0.04); border:1px solid #f0f0f0; }
+.controls { display:flex; gap:12px; align-items:center; flex-wrap:wrap; margin-top:12px; }
+.select { padding:6px 8px; border-radius:4px; border:1px solid #ccc; background:#fff }
+.btn { padding:6px 10px; border-radius:4px; border:1px solid #ccc; background:#f7f7f8; cursor:pointer }
+.btn:disabled { opacity:0.6; cursor:default }
+.btn-primary { background:#0d6efd; color:#fff; border-color:#0d6efd }
+.muted { color:#666 }
+.small { font-size:12px }
+.table-striped tbody tr:nth-child(even){ background:#fafafa }
+.text-right { text-align:right }
+.control-label { display:block; font-size:13px; font-weight:600; color:#333 }
+
+/* Form inputs and layout */
+.input { width:100%; padding:8px 10px; border-radius:4px; border:1px solid #ccc; box-sizing:border-box }
+.form-center { max-width:420px; margin:16px auto }
+.error-text { color:#d9534f; margin-top:8px }
+.success-text { color:#28a745; margin-top:8px }
+.form-actions { margin-top:12px }
+.form-legend { margin:0 0 8px 0; font-size:18px }
+

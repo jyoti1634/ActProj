@@ -9,4 +9,7 @@ public interface AccountService {
     Account createAccount(Account account);
     Optional<Account> findById(Integer id);
     List<Account> findByUserId(Integer userId);
+
+    // Check duplicate by user and account name (case-insensitive)
+    boolean existsByUserIdAndAccountNameIgnoreCase(Integer userId, String accountName);
 }

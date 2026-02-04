@@ -38,4 +38,15 @@ public class LedgerController {
         List<LedgerDto> dtos = ledgerService.findByMonthId(monthId).stream().map(LedgerMapper::toDto).collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
     }
+
+    // Endpoint for deleting a specific ledger entry within a month
+    @DeleteMapping("/{entryId}")
+    public ResponseEntity<Void> delete(@PathVariable Integer monthId, @PathVariable Integer entryId) {
+        Ledger ledger = ledgerService.findById(entryId).orElseThrow(() -> new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.NOT_FOUND, "Ledger entry not found"));
+        if (ledger.getMonth() == null || !ledger.getMonth().getId().equals(monthId)) {
+            throw new org.springframework.web.server.ResponseStatusException(org.springframework.http.HttpStatus.BAD_REQUEST, "Ledger entry does not belong to specified month");
+        }
+        ledgerService.deleteById(entryId);
+        return ResponseEntity.noContent().build();
+    }
 }

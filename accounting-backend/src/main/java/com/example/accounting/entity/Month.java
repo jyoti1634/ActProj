@@ -25,6 +25,12 @@ public class Month {
     private String monthName;
 
     // Opening balance field with precision and scale, defaulting to 0.00
+    @Builder.Default
     @Column(name = "opening_balance", precision = 12, scale = 2)
     private BigDecimal openingBalance = new BigDecimal("0.00");
+
+    // Closing balance field (stored) to make recalculation results persistent
+    @Builder.Default
+    @Column(name = "closing_balance", precision = 12, scale = 2)
+    private BigDecimal closingBalance = new BigDecimal("0.00");
 }

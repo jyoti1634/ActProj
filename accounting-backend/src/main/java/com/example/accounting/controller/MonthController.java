@@ -38,4 +38,14 @@ public class MonthController {
         List<MonthDto> dtos = monthService.findByYearId(yearId).stream().map(MonthMapper::toDto).collect(Collectors.toList());
         return ResponseEntity.ok(dtos);
     }
+
+    // Endpoint for updating a month (e.g., openingBalance, closingBalance)
+    @PatchMapping("/{monthId}")
+    public ResponseEntity<MonthDto> update(@PathVariable Integer yearId, @PathVariable Integer monthId, @RequestBody MonthDto dto) {
+        Month m = monthService.findById(monthId).orElseThrow(() -> new IllegalArgumentException("Month not found"));
+        if (dto.getOpeningBalance() != null) m.setOpeningBalance(dto.getOpeningBalance());
+        if (dto.getClosingBalance() != null) m.setClosingBalance(dto.getClosingBalance());
+        Month saved = monthService.updateMonth(m);
+        return ResponseEntity.ok(MonthMapper.toDto(saved));
+    }
 }

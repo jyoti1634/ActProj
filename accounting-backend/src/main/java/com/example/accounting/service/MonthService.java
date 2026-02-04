@@ -11,4 +11,5 @@ public interface MonthService {
     Optional<Month> findById(Integer id);
     List<Month> findByYearId(Integer yearId);
     BigDecimal calculateClosingBalance(Integer monthId);
+    Month updateMonth(Month month); // new
 }

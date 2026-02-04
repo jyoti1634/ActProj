@@ -23,7 +23,19 @@ public class AccountServiceImpl implements AccountService {
         if (account.getAccountName() == null || account.getAccountName().isBlank()) {
             throw new IllegalArgumentException("Account name is required");
         }
+        // Prevent duplicates per user (case-insensitive)
+        if (account.getUser() != null && account.getUser().getId() != null) {
+            boolean exists = accountRepository.existsByUserIdAndAccountNameIgnoreCase(account.getUser().getId(), account.getAccountName());
+            if (exists) {
+                throw new IllegalStateException("Account with this name already exists for the user");
+            }
+        }
         return accountRepository.save(account);
+    }
+
+    @Override
+    public boolean existsByUserIdAndAccountNameIgnoreCase(Integer userId, String accountName) {
+        return accountRepository.existsByUserIdAndAccountNameIgnoreCase(userId, accountName);
     }
     // Finds an account by its ID 
     @Override

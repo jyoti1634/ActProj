@@ -40,6 +40,13 @@ public class MonthServiceImpl implements MonthService {
     public List<Month> findByYearId(Integer yearId) {
         return monthRepository.findByYearId(yearId);
     }
+
+    // Update an existing Month (used to set opening balance etc.)
+    @Override
+    public Month updateMonth(Month month) {
+        return monthRepository.save(month);
+    }
+
     // Calculates the closing balance for a given month based on ledger entries
     @Override
     @Transactional(readOnly = true)

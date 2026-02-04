@@ -7,4 +7,7 @@ import java.util.List;
 public interface AccountRepository extends JpaRepository<Account, Integer> {
     // Method to find accounts by user ID
     List<Account> findByUserId(Integer userId);
+
+    // Check for duplicate account name for a user (case-insensitive)
+    boolean existsByUserIdAndAccountNameIgnoreCase(Integer userId, String accountName);
 }

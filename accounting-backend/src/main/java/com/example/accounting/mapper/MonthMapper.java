@@ -13,6 +13,7 @@ public final class MonthMapper {
         dto.setYearId(month.getYear() != null ? month.getYear().getId() : null);
         dto.setMonthName(month.getMonthName());
         dto.setOpeningBalance(month.getOpeningBalance());
+        dto.setClosingBalance(month.getClosingBalance());
         return dto;
     }
 
@@ -21,6 +22,7 @@ public final class MonthMapper {
         Month m = Month.builder()
                 .monthName(dto.getMonthName())
                 .openingBalance(dto.getOpeningBalance())
+                .closingBalance(dto.getClosingBalance())
                 .build();
         return m;
     }

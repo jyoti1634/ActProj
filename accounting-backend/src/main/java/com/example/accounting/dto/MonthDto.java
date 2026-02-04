@@ -17,4 +17,6 @@ public class MonthDto {
     private String monthName;
 
     private BigDecimal openingBalance;
+
+    private BigDecimal closingBalance;
 }
