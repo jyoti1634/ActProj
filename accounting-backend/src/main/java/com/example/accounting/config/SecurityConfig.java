@@ -43,6 +43,7 @@ public class SecurityConfig {
             .and()
             .authorizeHttpRequests()
             .requestMatchers("/api/v1/auth/**", "/actuator/**", "/v3/api-docs/**", "/swagger-ui/**").permitAll()
+            .requestMatchers("/", "/index.html", "/static/**", "/**/*.js", "/**/*.css", "/favicon.ico").permitAll()
             .anyRequest().authenticated();
 
         if (jwtAuthenticationFilter != null) {
