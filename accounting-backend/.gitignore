@@ -42,6 +42,10 @@ generated-test-sources/
 build/
 out/
 
+# Flyway artifacts
+flyway/
+flyway-*.zip
+
 # IDE run configs
 *.ipr
 *.iws
